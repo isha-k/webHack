@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'rest_framework_simplejwt',
     'corsheaders',
     'account_management',
+    'task_management',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
