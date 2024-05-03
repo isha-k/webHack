@@ -37,15 +37,6 @@ class TaskPointsTransaction(models.Model):
     def __str__(self):
         return self.task.title
     
-class Levels(models.Model):
-    level_name = models.IntegerField()
-    minimum_points = models.IntegerField()
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
-
-    def __str__(self):
-        return self.level
-    
 class gpt_suggestions(models.Model): 
     user = models.ForeignKey('account_management.User', on_delete=models.CASCADE)
     user_message = models.TextField()
