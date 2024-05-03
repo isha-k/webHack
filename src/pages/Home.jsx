@@ -3,7 +3,8 @@ import { Canvas } from "@react-three/fiber"
 import Loader from "../components/Loader"
 import Island from "../models/Island"
 import Sky from "../models/Sky"
-import { Effects, OrbitControls } from "@react-three/drei";
+import { Effects, OrbitControls } from "@react-three/drei"
+import { Bloom, EffectComposer } from "@react-three/postprocessing"
 
 const Home = () => {
   const [isRotating, setIsRotating] = useState(false);
@@ -27,23 +28,23 @@ const Home = () => {
   useEffect(() => {
     if (controlsRef.current) {
       // Set the max and min distance from the center
-      controlsRef.current.maxDistance = 0.1; // maximum distance from the center
-      controlsRef.current.minDistance = 0.1; // minimum distance from the center
+      controlsRef.current.maxDistance = 0.5; // maximum distance from the center
+      controlsRef.current.minDistance = 0.5; // minimum distance from the center
     }
   }, []);
 
   return (
     <section className="w-full h-screen relative">
         <Canvas
-        className={`w-full h-screen bg-transparent ${isRotating ? 'cursor-grabbing' : 'cursor-grab'}`}
-        camera={{ near: 0.1, far: 1000}}>
+        className={`w-full h-screen bg-transparent ${isRotating ? 'cursor-grabbing' : 'cursor-grab'}`}>
               <Suspense fallback={<Loader />}>
 
                 <ambientLight intensity={0.4} color="#FF3DF3" />
+                <directionalLight position={[5,5,5]} intensity={5}/>
                 <directionalLight position={[1, 1, 1]} intensity={2} color="#3DBEFF" />
                 <pointLight position={[10, 10, 10]} intensity={1} color="#00d4ff" />
                 <pointLight position={[-10, -10, -10]} intensity={0.75} color="#FF3DF3" />
-                <fogExp2 attach="fog" args={["#3DBEFF", 0.015]} />
+                <fogExp2 attach="fog" args={["#3DBEFF", 0.015]} />            
 
                 <Island 
                 position = {islandPosition}
@@ -53,8 +54,7 @@ const Home = () => {
                 setIsRotating = {setIsRotating}
                 />
                 
-                <OrbitControls ref={controlsRef} target={[0, 0, 0]} enablePan={true} enableZoom={true} enableRotate={true} />
-
+                <OrbitControls ref={controlsRef} target={[0, 0, 0]} enablePan={true} enableZoom={false} enableRotate={true} />
             </Suspense>
         </Canvas>
     </section>
