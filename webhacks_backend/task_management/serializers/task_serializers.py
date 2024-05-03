@@ -5,7 +5,7 @@ from task_management.models.task_model import Task
 class DisplayTaskSerializer(serializers.ModelSerializer):
     class Meta:
         model = Task
-        fields = ["id", "title", "description", "status","deadline","created_at","updated_at"]
+        fields = ["title", "description", "status","deadline","created_at"]
 
 class AddTaskSerializer(serializers.ModelSerializer):
     class Meta:

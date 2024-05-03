@@ -3,7 +3,7 @@ from django.db.models import Sum
 
 from account_management import models
 from task_management.models.task_model import Task, TaskPointsTransaction
-from task_management.serializers.task_serializers import AddTaskSerializer, UpdateTaskStatusSerializer
+from task_management.serializers.task_serializers import AddTaskSerializer, DisplayTaskSerializer, UpdateTaskStatusSerializer
 import os
 from openai import OpenAI
 
@@ -28,6 +28,11 @@ def update_task_service(data, task_id):
         serializer.save()
         return ({"message": "Task Updated Successfully", "data": serializer.data}, status.HTTP_200_OK)
     return (serializer.errors, status.HTTP_400_BAD_REQUEST)
+
+def get_task_list_service(user):
+    tasks = Task.objects.filter(user=user)
+    serializer = DisplayTaskSerializer(tasks, many=True)
+    return (serializer.data, status.HTTP_200_OK)
 
 def get_points_service(user):
     transactions = TaskPointsTransaction.objects.filter(user=user)
@@ -65,3 +70,21 @@ def gpt_suggestion_service(user):
         ]
     )
     return response.choices[0].message.content, status.HTTP_200_OK 
+
+
+
+def get_leadership_board_service():
+    users = models.User.objects.all()
+    user_points = []
+    for user in users:
+        transactions = TaskPointsTransaction.objects.filter(user=user)
+        total_points = 0 if not transactions else transactions.aggregate(Sum('credit_points'))['credit_points__sum']
+        user_points.append({"user": user.name, "points": total_points})
+
+    # Sort the list in descending order based on points
+    user_points.sort(key=lambda x: x['points'], reverse=True)
+
+    # Return only the top 10 users
+    top_10_users = user_points[:10]
+
+    return top_10_users, status.HTTP_200_OK
