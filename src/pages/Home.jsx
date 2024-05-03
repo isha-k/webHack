@@ -6,6 +6,7 @@ import Sky from "../models/Sky"
 import { Effects, OrbitControls } from "@react-three/drei"
 import { Bloom, EffectComposer } from "@react-three/postprocessing"
 
+
 const Home = () => {
   const [isRotating, setIsRotating] = useState(false);
   const controlsRef = useRef(null);
