@@ -38,36 +38,6 @@ const Login = (props) => {
   // Authentication calls will be made here...
   }
 
-  <div className='flex text-lg gap-7 font-medium justify-center items-center'>
-  <div className="card-title text-center">
-    <div>Login</div>
-  </div>
-  <br />
-  <div>
-    <input
-      value={email}
-      placeholder="Enter your email here"
-      onChange={(ev) => setEmail(ev.target.value)}
-      className={'inputBox'}
-    />
-    <label className="errorLabel">{emailError}</label>
-  </div>
-  <br />
-  <div className={'inputContainer'}>
-    <input
-      value={password}
-      placeholder="Enter your password here"
-      onChange={(ev) => setPassword(ev.target.value)}
-      className={'inputBox'}
-    />
-    <label className="errorLabel">{passwordError}</label>
-  </div>
-  <br />
-  <div className={'inputContainer'}>
-    <button className="btn btn-primary" type="button" onClick={onButtonClick} value={'Log in'} >Login</button>
-  </div>
-</div>
-
   return (
     <section className='relative flex lg:flex-row flex-col max-container'>
       <div className='flex-1 min-w-[50%] flex flex-col'>
@@ -80,9 +50,11 @@ const Login = (props) => {
             Email
             <input
               type='email'
+              value = {email}
               name='email'
+              onChange={(ev) => setEmail(ev.target.value)}
               className='input'
-              placeholder='john@email.com'
+              placeholder='Enter e-mail'
               required
             />
           </label>
@@ -90,14 +62,19 @@ const Login = (props) => {
             Email
             <input
               type='password'
+              value={password}
               name='password'
               className='input'
+              placeholder='Enter password'
+              onChange={(ev) => setPassword(ev.target.value)}
               required
             />
           </label>
+          <label className="errorLabel">{passwordError}</label>
           <button
            type="submit"
            className="btn"
+           value={'Log in'}
           >
             Login
           </button>
