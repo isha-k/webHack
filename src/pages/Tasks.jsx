@@ -1,9 +1,7 @@
-import React from 'react'
+import Spline from '@splinetool/react-spline';
 
-const Tasks = () => {
+export default function App() {
   return (
-    <div>Tasks</div>
-  )
+    <Spline scene="https://prod.spline.design/ZXXSJidIOfEfKttp/scene.splinecode" />
+  );
 }
-
-export default Tasks
