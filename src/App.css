@@ -1,10 +1,3 @@
-#root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
-}
-
 .logo {
   height: 6em;
   padding: 1.5em;
@@ -102,3 +95,165 @@
   border: 1px solid grey;
   padding-left: 8px;
 }
+
+.animation, .animation_layer {
+	height: 1000px;
+}
+
+.animation {
+  display: block;
+	position: relative;
+	z-index: 10;
+}
+
+.animation-layer {
+  background-position: bottom center;
+  background-size: auto 1038px;
+  background-repeat: repeat-x;
+  width: 100%;
+  position: absolute;
+}
+
+.animation-layer.parallax {
+  position: fixed;
+}
+
+#artback {
+  background-image: url(./images/background.png);
+}
+
+
+#background {
+  background-image: url(./images/background.png);
+  background-size: cover;
+  height: 100vh; /* Adjust as necessary */
+}
+
+#textblock {
+  background-color: #210002;
+  height: 100vh;
+}
+
+#textblock-container {
+  width: 50%;
+  margin: 0 auto;
+  padding-top: 70px;
+}
+
+#textblock-title {
+  color: #ffaf1b;
+  font-size: 35px;
+  font-weight: 600;
+  font-family: "Helvetica Neue";
+}
+
+#textblock-content {
+  color: #ffaf1b;
+  font-size: 20px;
+}
+
+#textblock-footer {
+  color: #ffaf1b;
+  font-size: 15px;
+  font-weight: 400;
+  position: fixed;
+  width: 100%;
+  bottom: 0px;
+  justify-content:center;
+  align-items:center;
+  text-align:center;
+  margin-bottom: 20px;
+
+}
+
+#textblock-devsense {
+  text-decoration: none;
+  color: #ffaf1b;
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.animation, .animation_layer {
+	height: 1000px;
+}
+
+.animation {
+  display: block;
+	position: relative;
+	z-index: 10;
+}
+
+.animation_layer {
+	background-position: bottom center;
+	background-size: auto 1038px;
+	background-repeat: repeat-x;
+	width: 100%;
+	position: absolute;
+}
+.animation_layer.parallax {
+	position: fixed;
+}
+
+.kanban-board {
+  background-color: rgba(255, 255, 255, 0.5); /* white with 50% opacity */
+  margin: 10px; /* Space between columns */
+  padding: 20px; 
+}
+
+.kanban-column {
+  width: 30%; /* Adjust based on preference */
+  min-height: 400px; /* Or any height that suits your content */
+  margin: 10px; /* Space between columns */
+  padding: 20px; /* Padding inside each column */
+  background-color: #f4f4f4; /* Light grey background for each column */
+  border-radius: 8px; /* Rounded corners */
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1); /* Subtle shadow for depth */
+  display: inline-block; /* Align columns horizontally */
+  vertical-align: top; /* Align columns top */
+}
+
+.task-card {
+  background: white;
+  margin: 10px 0;
+  padding: 10px;
+  border: 1px solid #ccc; /* Light grey border */
+  border-radius: 4px; /* Slightly rounded corners for the task cards */
+}
+
+button {
+  background-color: #007BFF; /* Bootstrap primary blue */
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: 10px; /* Space above the button */
+}
+
+button:hover {
+  background-color: #0056b3; /* Darker blue on hover */
+}
+
+/* Additional styling for the popup */
+.popup {
+  position: absolute;
+  top: 20%;
+  left: 40%;
+  padding: 20px;
+  border: 1px solid black;
+  background-color: white;
+  width: 300px; /* Fixed width for the popup */
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  z-index: 10; /* Ensures the popup is above other content */
+  border-radius: 8px; /* Rounded corners for the popup */
+}
+
+input[type="text"], input[type="checkbox"] {
+  padding: 5px;
+  margin: 5px 0;
+  display: block;
+  width: 95%; /* Makes input elements nearly as wide as their containers */
+}
+
+
+
