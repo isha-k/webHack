@@ -23,6 +23,7 @@ const Island = ({ isRotating, setIsRotating, ...props}) => {
   const rotationSpeed = useRef(0);
   // Define a damping factor to control rotation damping
   const dampingFactor = 0.95;
+  
 
   // // Handle pointer (mouse or touch) down event
   // const handlePointerDown = (event) => {
