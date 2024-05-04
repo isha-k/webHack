@@ -15,6 +15,7 @@ const Navbar = () => {
         <NavLink to='/tasks' className={({ isActive }) => isActive ? "text-blue-600" : "text-white"}>
           Tasks
         </NavLink>
+
       </nav>
     </header>
   );
