@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, Link } from 'react-router-dom'
 
 const Login = (props) => {
   const [email, setEmail] = useState('')
@@ -41,7 +41,7 @@ const Login = (props) => {
   return (
     <section className='relative flex lg:flex-row flex-col max-container'>
       <div className='flex-1 min-w-[50%] flex flex-col'>
-        <h1 className='head-text'>Welcome!</h1>
+        <h1 className='head-text'>Login!</h1>
         <form 
           className='w-full flex flex-col gap-7 mt-14'
           onClick={onButtonClick}
@@ -78,6 +78,7 @@ const Login = (props) => {
           >
             Login
           </button>
+          <Link to="/register" className="text-blue-500 hover:text-blue-800">Don't have an account? Register now</Link>
         </form>
       </div>
     </section>

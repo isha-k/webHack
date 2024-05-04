@@ -12,16 +12,22 @@ const Profile = (props) => {
   }
 
   return (
-    <div className="container mt-5 d-flex justify-content-center align-items-center">
-        <h1 className='card-title text-center'>Welcome!</h1>
-        <button
-          className='btn btn-primary'
-          type="button"
-          onClick={onButtonClick}
-          value={loggedIn ? 'Log out' : 'Log in'}
-        >Login</button>
-        {loggedIn ? <div>Your email address is {email}</div> : <div />}
-    </div>
+    <section className='relative flex lg:flex-row flex-col max-container'>
+      <div className='flex-1 min-w-[50%] flex flex-col'>
+        <h1 className='head-text'>Welcome!</h1>
+        <form 
+          className='w-full flex flex-col gap-7 mt-14'
+          >
+          <button
+           onClick={onButtonClick}
+           type="submit"
+           className="btn"
+           value={loggedIn ? 'Log out' : 'Log in'}
+          >Login
+          </button>
+        </form>
+      </div>
+    </section>
   )
 }
 

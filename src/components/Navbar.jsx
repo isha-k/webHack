@@ -5,14 +5,14 @@ const Navbar = () => {
   return (
     <header className='header'>
       <nav className='flex text-lg gap-7 font-medium'>
-      <NavLink to='/'  className={({ isActive }) => isActive ? "text-purple-400" : "text-white" }>Welcome</NavLink>
+      <NavLink to='/'  className={({ isActive }) => isActive ? "text-purple-400" : "text-black" }>Welcome</NavLink>
       </nav>
 
       <nav className='flex text-lg gap-7 font-medium'>
-        <NavLink to='/profile' className={({ isActive }) => isActive ? "text-blue-600" : "text-white" }>
+        <NavLink to='/profile' className={({ isActive }) => isActive ? "text-purple-400" : "text-black" }>
           Profile
         </NavLink>
-        <NavLink to='/tasks' className={({ isActive }) => isActive ? "text-blue-600" : "text-white"}>
+        <NavLink to='/tasks' className={({ isActive }) => isActive ? "text-purple-400" : "text-black"}>
           Tasks
         </NavLink>
 
