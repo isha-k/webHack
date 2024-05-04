@@ -38,37 +38,72 @@ const Login = (props) => {
   // Authentication calls will be made here...
   }
 
+  <div className='flex text-lg gap-7 font-medium justify-center items-center'>
+  <div className="card-title text-center">
+    <div>Login</div>
+  </div>
+  <br />
+  <div>
+    <input
+      value={email}
+      placeholder="Enter your email here"
+      onChange={(ev) => setEmail(ev.target.value)}
+      className={'inputBox'}
+    />
+    <label className="errorLabel">{emailError}</label>
+  </div>
+  <br />
+  <div className={'inputContainer'}>
+    <input
+      value={password}
+      placeholder="Enter your password here"
+      onChange={(ev) => setPassword(ev.target.value)}
+      className={'inputBox'}
+    />
+    <label className="errorLabel">{passwordError}</label>
+  </div>
+  <br />
+  <div className={'inputContainer'}>
+    <button className="btn btn-primary" type="button" onClick={onButtonClick} value={'Log in'} >Login</button>
+  </div>
+</div>
 
   return (
-    <div className='flex text-lg gap-7 font-medium justify-center items-center'>
-      <div className="card-title text-center">
-        <div>Login</div>
+    <section className='relative flex lg:flex-row flex-col max-container'>
+      <div className='flex-1 min-w-[50%] flex flex-col'>
+        <h1 className='head-text'>Welcome!</h1>
+        <form 
+          className='w-full flex flex-col gap-7 mt-14'
+          onClick={onButtonClick}
+          >
+          <label className='text-black-500 font-semibold'>
+            Email
+            <input
+              type='email'
+              name='email'
+              className='input'
+              placeholder='john@email.com'
+              required
+            />
+          </label>
+          <label className='text-black-500 font-semibold'>
+            Email
+            <input
+              type='password'
+              name='password'
+              className='input'
+              required
+            />
+          </label>
+          <button
+           type="submit"
+           className="btn"
+          >
+            Login
+          </button>
+        </form>
       </div>
-      <br />
-      <div>
-        <input
-          value={email}
-          placeholder="Enter your email here"
-          onChange={(ev) => setEmail(ev.target.value)}
-          className={'inputBox'}
-        />
-        <label className="errorLabel">{emailError}</label>
-      </div>
-      <br />
-      <div className={'inputContainer'}>
-        <input
-          value={password}
-          placeholder="Enter your password here"
-          onChange={(ev) => setPassword(ev.target.value)}
-          className={'inputBox'}
-        />
-        <label className="errorLabel">{passwordError}</label>
-      </div>
-      <br />
-      <div className={'inputContainer'}>
-        <button className="btn btn-primary" type="button" onClick={onButtonClick} value={'Log in'} >Login</button>
-      </div>
-    </div>
+    </section>
   )
 }
 
