@@ -9,33 +9,56 @@ const Login = (props) => {
 
   const navigate = useNavigate()
 
-  const onButtonClick = () => {
+  console.log("hi from login page")
+
+
+  const onButtonClick = async (event) => {
+    event.preventDefault();
+
     // Set initial error values to empty
-  setEmailError('')
-  setPasswordError('')
+    setEmailError('')
+    setPasswordError('')
 
-  // Check if the user has entered both fields correctly
-  if ('' === email) {
-    setEmailError('Please enter your email')
-    return
-  }
+    // Check if the user has entered both fields correctly
+    if ('' === email) {
+      setEmailError('Please enter your email')
+      return
+    }
 
-  if (!/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(email)) {
-    setEmailError('Please enter a valid email')
-    return
-  }
+    if (!/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(email)) {
+      setEmailError('Please enter a valid email')
+      return
+    }
 
-  if ('' === password) {
-    setPasswordError('Please enter a password')
-    return
-  }
+    if ('' === password) {
+      setPasswordError('Please enter a password')
+      return
+    }
 
-  if (password.length < 7) {
-    setPasswordError('The password must be 8 characters or longer')
-    return
-  }
+    if (password.length < 2) {
+      setPasswordError('The password must be 2 characters or longer')
+      return
+    }
 
-  // Authentication calls will be made here...
+    const response = await fetch('http://127.0.0.1:8000/api/user/login/', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ email, password })
+    });
+
+    const data = await response.json();
+
+    if (response.ok) {
+      // If the login was successful, store the access token and navigate to the home page
+      localStorage.setItem('accessToken', data.token.access);
+      navigate('/');
+    } else {
+      // If the login failed, show an error message
+      setPasswordError(data.msg);
+      console.log(data.msg)
+    }
   }
 
   return (
@@ -44,7 +67,7 @@ const Login = (props) => {
         <h1 className='head-text'>Welcome!</h1>
         <form 
           className='w-full flex flex-col gap-7 mt-14'
-          onClick={onButtonClick}
+          onSubmit={onButtonClick}
           >
           <label className='text-black-500 font-semibold'>
             Email
@@ -59,7 +82,7 @@ const Login = (props) => {
             />
           </label>
           <label className='text-black-500 font-semibold'>
-            Email
+            Password
             <input
               type='password'
               value={password}
