@@ -1,4 +1,6 @@
 import React, { useState } from 'react'
+import Spline from '@splinetool/react-spline';
+
 
 const Audio = () => {
     const [file, setFile] = useState(null);
@@ -25,6 +27,7 @@ const Audio = () => {
     };
   return (
     <section className='max-container'>
+        <Spline scene="https://prod.spline.design/cAB2EgWqWcYhnHVa/scene.splinecode" />
         <div className='items-center justify-center flex flex-col'>
         <input type="file" accept="audio/*" onChange={handleFileChange} className="btn btn-primary mb-2" />
                 {file && (
@@ -55,9 +58,6 @@ const Audio = () => {
                         </div>
                     </div>
                 )}
-        <div>
-            
-        </div>
         </div>
     </section>
 
