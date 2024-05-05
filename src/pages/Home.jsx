@@ -1,8 +1,20 @@
 import Spline from '@splinetool/react-spline';
+import logo from './logo.png';
 
 export default function App() {
   return (
-    <div style={{ width: '100vw', height: '100vh' }}>
-<Spline scene="https://prod.spline.design/ZXXSJidIOfEfKttp/scene.splinecode" />    </div>
+    <div>
+    <div style={{
+      position: 'fixed',
+      top: 0,
+      left: '50%',
+      maxWidth: '10%',
+      transform: 'translateX(-50%)',
+      zIndex: 1000 // Ensures the logo stays on top
+    }}>
+    <img src={logo} alt="Logo" /> 
+    </div>
+    <Spline scene="https://prod.spline.design/ZXXSJidIOfEfKttp/scene.splinecode" />
+  </div>
   );
 }
