@@ -1,7 +1,7 @@
 import React from 'react'
 import { Route, BrowserRouter as Router, Routes} from 'react-router-dom'
 import Navbar from './components/Navbar'
-import { Home, Profile, Tasks, Login, Register } from './pages'
+import { Home, Profile, Tasks, Login, Register, Audio } from './pages'
 import { useEffect, useState } from 'react'
 
 const App = () => {
@@ -18,6 +18,7 @@ const App = () => {
           <Route path='/tasks' element={<Tasks />}/>
           <Route path="/login" element={<Login setLoggedIn={setLoggedIn} setEmail={setEmail} />} />
           <Route path='/register' element={<Register />}/>
+          <Route path='/audio' element={<Audio />}/>
         </Routes>
       </Router>
     </main>
