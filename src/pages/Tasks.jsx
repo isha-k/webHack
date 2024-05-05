@@ -9,6 +9,8 @@ const KanbanBoard = () => {
   const [levelPoints, setLevelPoints] = useState({}); // To store level and points
   const [suggestions, setSuggestions] = useState(''); // To store GPT suggestions
   const [leaderboard, setLeaderboard] = useState([]); // To store leaderboard data
+const [showPopup, setShowPopup] = useState(false);
+
 
   // Fetch tasks from the backend when the component is mounted
   useEffect(() => {
@@ -148,21 +150,45 @@ const KanbanBoard = () => {
     <div className="flex flex-col bg-gray-50 p-10 space-y-10">
       <br />
           <div className="flex justify-between items-center">
-            <h1 className="text-3xl font-semibold">Kanban Board</h1>
-            <div className="flex space-x-4">
-              <div className="bg-blue-200 p-4 rounded">
-                <h2 className="text-xl">Total Points</h2>
-                <p className="text-2xl">{levelPoints.total_points ?? 0}</p>
-              </div>
-              <div className="bg-green-200 p-4 rounded">
-                <h2 className="text-xl">Level</h2>
-                <p className="text-2xl">{levelPoints.level ?? 'N/A'}</p>
-              </div>
-            </div>
-          </div>
+  <h1 className="text-3xl font-semibold">Organize Your Tasks</h1>
+  <div className="flex space-x-4">
+      <div className="bg-blue-200 p-4 rounded">
+    <h2 className="text-xl">Total Points</h2>
+    <p className="text-2xl flex items-center">
+      {levelPoints.total_points ?? 0}
+      <span 
+        className="underline text-blue-500 cursor-pointer ml-2"
+        onClick={() => setShowPopup(true)}
+      >
+        Redeem
+      </span>
+    </p>
+
+    {showPopup && (
+  <div className="fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 flex items-center justify-center">
+    <div className="bg-white p-6 rounded-lg shadow-md w-1/3">
+      <h2 className="text-2xl font-bold mb-4 text-center">Redeem Points</h2>
+      <p className="text-xl text-center mb-4">Please reach 200 points & earn MAC membership for free!</p>
+      <button 
+        className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700 transition-colors duration-200 ease-in-out block mx-auto"
+        onClick={() => setShowPopup(false)}
+      >
+        Close
+      </button>
+    </div>
+  </div>
+)}
+  </div>
+
+    <div className="bg-green-200 p-4 rounded">
+      <h2 className="text-xl">Level</h2>
+      <p className="text-2xl">{levelPoints.level ?? 'N/A'}</p>
+    </div>
+  </div>
+</div>
 
           <div className="bg-yellow-100 p-6 rounded-lg shadow-md">
-            <h2 className="text-2xl font-semibold">GPT Suggestion</h2>
+            <h2 className="text-2xl font-semibold">AI Suggestions</h2>
             <p className="mt-4 text-gray-700">{suggestions}</p>
           </div>
 
@@ -181,8 +207,16 @@ const KanbanBoard = () => {
                         <div key={task.id} className="border-b pb-4">
                           <h3 className="text-lg font-bold">{task.title}</h3>
                           <p className="text-gray-600">{task.description}</p>
-                          <p className="text-sm text-gray-500">Deadline: {task.deadline}</p>
-                          <div className="flex justify-between mt-4">
+<p className="text-sm text-gray-500">
+  <b>Deadline: </b> 
+  {new Date(task.deadline).toLocaleString('en-US', {
+    month: 'short', 
+    day: '2-digit', 
+    hour: '2-digit', 
+    minute: '2-digit', 
+    hour12: true
+  })}
+</p>                          <div className="flex justify-between mt-4">
                             {status !== 'todo' && (
                               <button
                                 className="bg-yellow-500 text-white px-3 py-1 rounded-md hover:bg-yellow-600"

@@ -1,70 +1,168 @@
-import React, { useState } from 'react'
+import React, { useState, useRef } from 'react';
 import Spline from '@splinetool/react-spline';
 
-
+// Tailwind CSS for styling
 const Audio = () => {
-    const [file, setFile] = useState(null);
-    const [showPopup, setShowPopup] = useState(false);
-    const [transcript, setTranscript] = useState(""); // State to store the script
-  
-    const handleFileChange = async (event) => {
-        setFile(event.target.files[0]);
-        setShowPopup(true); // Show popup when file is selected
-        // Assuming you have an API endpoint that processes the file and returns a transcript
-        const formData = new FormData();
-        formData.append('audioFile', event.target.files[0]);
-        const response = await fetch('API_ENDPOINT', {
-            method: 'POST',
-            body: formData
-        });
-        const data = await response.json();
-        setTranscript(data.transcript); // Set the transcript from API response
-        setShowPopup(false); // Hide popup after fetching the transcript
-    };
-  
-    const handleClosePopup = () => {
-      setShowPopup(false);
-    };
+  const [isRecording, setIsRecording] = useState(false);
+  const [audioBlob, setAudioBlob] = useState(null);
+  const [isUploading, setIsUploading] = useState(false);
+  const [transcript, setTranscript] = useState({});
+  const [error, setError] = useState(null);
+
+  const mediaRecorderRef = useRef(null);
+  const chunksRef = useRef([]);
+
+  const startRecording = async () => {
+    try {
+      const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+      mediaRecorderRef.current = new MediaRecorder(stream);
+
+      mediaRecorderRef.current.ondataavailable = (event) => {
+        chunksRef.current.push(event.data);
+      };
+
+      mediaRecorderRef.current.onstop = () => {
+        const blob = new Blob(chunksRef.current, { type: 'audio/wav' });
+        setAudioBlob(blob);
+      };
+
+      chunksRef.current = [];
+      mediaRecorderRef.current.start();
+      setIsRecording(true);
+    } catch (err) {
+      setError(`Failed to start recording: ${err.message}`);
+    }
+  };
+
+  const stopRecording = () => {
+    if (mediaRecorderRef.current) {
+      mediaRecorderRef.current.stop();
+      setIsRecording(false);
+    }
+  };
+
+  const handleFileChange = (event) => {
+    const selectedFile = event.target.files[0];
+    if (selectedFile) {
+      setAudioBlob(selectedFile);
+    }
+  };
+
+  const uploadAudio = async () => {
+    if (!audioBlob) return;
+
+    setIsUploading(true);
+    setError(null);
+
+    try {
+      const formData = new FormData();
+      formData.append('file', audioBlob);
+
+      const response = await fetch('http://127.0.0.1:8001/uploadfile/', {
+        method: 'POST',
+        body: formData,
+        headers: {
+          'Accept': 'application/json',
+        },
+      });
+
+      if (!response.ok) {
+        const errorText = await response.text();
+        throw new Error(`Failed to upload file: ${response.statusText} - ${errorText}`);
+      }
+
+      const data = await response.json();
+      setTranscript(data);
+    } catch (err) {
+      setError(err.message);
+    } finally {
+      setIsUploading(false);
+    }
+  };
+
   return (
-    <section className='max-container'>
-        <div className='items-center justify-center flex 100vh'>
-            <p><Spline scene="https://prod.spline.design/cAB2EgWqWcYhnHVa/scene.splinecode" /></p>
-        </div>
+      <section className="max-container">
+         <div className="flex justify-center text-center items-center space-x-4">
+  {!isRecording ? (
+    <button
+      onClick={startRecording}
+      className="p-2 bg-green-500 text-white rounded cursor-pointer hover:bg-green-600 transition duration-200"
+    >
+      Start Recording
+    </button>
+  ) : (
+    <button
+      onClick={stopRecording}
+      className="p-2 bg-red-500 text-white rounded cursor-pointer hover:bg-red-600 transition duration-200"
+    >
+      Stop Recording
+    </button>
+  )}
+</div>
+      <div className="items-center justify-center flex h-100vh">
+        <p>
+          <Spline scene="https://prod.spline.design/cAB2EgWqWcYhnHVa/scene.splinecode" />
+        </p>
+      </div>
 
-        <div className='items-center justify-center flex flex-col'>
-        <input type="file" accept="audio/*" onChange={handleFileChange} className="btn btn-primary mb-2" />
-                {file && (
-                    <audio controls src={URL.createObjectURL(file)} className="mt-2">
-                        Your browser does not support the audio element.
-                    </audio>
-                )}
-                {file && transcript && (
-                    <div className="transcript-output p-4 mt-4 bg-gray-100 rounded shadow">
-                        <h3 className="text-lg font-semibold">Transcript:</h3>
-                        <p>{transcript}</p>
-                    </div>
-                )}
-                {showPopup && (
-                    <div className="modal show fade" style={{ display: 'block' }} tabIndex="-1">
-                        <div className="modal-dialog">
-                            <div className="modal-content">
-                                <div className="modal-header">
-                                    <h5 className="modal-title">File Upload</h5>
-                                    <button type="button" className="close" data-dismiss="modal" aria-label="Close" onClick={handleClosePopup}>
-                                        <span aria-hidden="true">&times;</span>
-                                    </button>
-                                </div>
-                                <div className="modal-body">
-                                    <p>Processing: {file.name}</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                )}
-        </div>
+      <div className="flex flex-col items-center justify-center space-y-4 mt-6">
+        
+        
+        <input
+          type="file"
+          accept="audio/*"
+          onChange={handleFileChange}
+          className="p-2 bg-blue-500 text-white rounded cursor-pointer hover:bg-blue-600 transition duration-200"
+        />
+        
+        <button
+          onClick={uploadAudio}
+          className="p-2 bg-blue-500 text-white rounded cursor-pointer hover:bg-blue-600 transition duration-200"
+        >
+          Upload Audio
+        </button>
+
+       {isUploading && (
+  <div className="flex items-center justify-center text-gray-600">
+    <svg className="animate-spin h-5 w-5 mr-3" viewBox="0 0 24 24">
+      <circle
+        className="opacity-25"
+        cx="12"
+        cy="12"
+        r="10"
+        stroke="currentColor"
+        strokeWidth="4"
+      ></circle>
+      <path
+        className="opacity-75"
+        fill="currentColor"
+        d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+      ></path>
+    </svg>
+    Analyzing Voice...
+  </div>
+)}
+        
+        {error && (
+          <div className="text-red-500 mt-2">Error: {error}</div>
+        )}
+        
+        {!isUploading && transcript && Object.keys(transcript).length > 0 && (
+          <div className="transcript-output p-5 bg-white rounded-md shadow-lg w-3/4 text-left border border-gray-200">
+            <h3 className="text-2xl font-semibold mb-3">Transcript</h3>
+            <div className="space-y-3">
+              {Object.keys(transcript).map((key) => (
+                <div key={key} className="flex flex-col">
+                  <strong className="text-gray-900">{key}:</strong>
+                  <span className="text-gray-600 pl-2">{transcript[key]}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+      </div>
     </section>
+  );
+};
 
-  )
-}
-
-export default Audio
+export default Audio;
