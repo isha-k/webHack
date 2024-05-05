@@ -84,20 +84,32 @@ const Audio = () => {
       <section className="max-container">
          <div className="flex justify-center text-center items-center space-x-4">
   {!isRecording ? (
-    <button
-      onClick={startRecording}
-      className="p-2 bg-green-500 text-white rounded cursor-pointer hover:bg-green-600 transition duration-200"
+  <button
+    onClick={startRecording}
+    className="flex items-center justify-center p-3 bg-green-500 text-white rounded-lg hover:bg-green-600 transition duration-200"
+  >
+    {/* SVG for a microphone icon */}
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      className="w-5 h-5 mr-2"
+      viewBox="0 0 24 24"
+      fill="currentColor"
     >
-      Start Recording
-    </button>
-  ) : (
-    <button
-      onClick={stopRecording}
-      className="p-2 bg-red-500 text-white rounded cursor-pointer hover:bg-red-600 transition duration-200"
-    >
-      Stop Recording
-    </button>
-  )}
+      <path d="M12 15a3 3 0 0 0 3-3V6a3 3 0 1 0-6 0v6a3 3 0 0 0 3 3zm7-3a7 7 0 0 1-14 0h2a5 5 0 0 0 10 0h2zm-6 5v3h3v2H8v-2h3v-3h2z" />
+    </svg>
+    Start Recording
+  </button>
+) : (
+  <button
+    onClick={stopRecording}
+    className="flex items-center justify-center p-3 bg-red-500 text-white rounded-lg hover:bg-red-600 transition duration-200"
+  >
+    {/* SVG for a stop icon */}
+  
+    Stop Recording
+  </button>
+)}
+
 </div>
       <div className="items-center justify-center flex h-100vh">
         <p>
@@ -139,7 +151,7 @@ const Audio = () => {
         d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
       ></path>
     </svg>
-    Analyzing Voice...
+     Analyzing Voice...
   </div>
 )}
         
