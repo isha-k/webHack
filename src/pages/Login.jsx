@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, Link } from 'react-router-dom'
 
 const Login = (props) => {
   const [email, setEmail] = useState('')
@@ -101,6 +101,8 @@ const Login = (props) => {
           >
             Login
           </button>
+          <Link to="/register" style={{ color: 'blue', textDecoration: 'underline' }}>Not a user yet? Register now</Link>
+
         </form>
       </div>
     </section>
