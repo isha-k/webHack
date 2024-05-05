@@ -27,7 +27,10 @@ const Audio = () => {
     };
   return (
     <section className='max-container'>
-        <Spline scene="https://prod.spline.design/cAB2EgWqWcYhnHVa/scene.splinecode" />
+        <div className='items-center justify-center flex 100vh'>
+            <p><Spline scene="https://prod.spline.design/cAB2EgWqWcYhnHVa/scene.splinecode" /></p>
+        </div>
+
         <div className='items-center justify-center flex flex-col'>
         <input type="file" accept="audio/*" onChange={handleFileChange} className="btn btn-primary mb-2" />
                 {file && (
