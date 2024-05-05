@@ -1,8 +1,24 @@
-import React from 'react'
-import { Route, BrowserRouter as Router, Routes} from 'react-router-dom'
-import Navbar from './components/Navbar'
-import { Home, Profile, Tasks, Login, Register, Audio } from './pages'
-import { useEffect, useState } from 'react'
+import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import Navbar from './components/Navbar';
+import { Home, Profile, Tasks, Login, Register, Audio } from './pages';
+
+import { useLocation } from 'react-router-dom';
+
+const CheckTokenAndRedirect = () => {
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  useEffect(() => {
+    const token = localStorage.getItem('accessToken');
+    if (!token && location.pathname !== '/login' && location.pathname !== '/register' && location.pathname !== '/') {
+      navigate('/login');
+    }
+  }, [navigate, location]);
+
+  return null;
+}
 
 const App = () => {
   const [loggedIn, setLoggedIn] = useState(false)
@@ -12,6 +28,7 @@ const App = () => {
     <main>
       <Router>
         <Navbar />
+        <CheckTokenAndRedirect />
         <Routes>
           <Route path="/" element={<Home email={email} loggedIn={loggedIn} setLoggedIn={setLoggedIn} />} />
           <Route path='/profile' element={<Profile />}/>

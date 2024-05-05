@@ -10,7 +10,7 @@ const Audio = () => {
   const [error, setError] = useState(null);
 
   const mediaRecorderRef = useRef(null);
-  const chunksRef = useRef([]);
+    const chunksRef = useRef([]);
 
   const startRecording = async () => {
     try {
