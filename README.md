@@ -48,8 +48,10 @@ Interactive 3D website which allows students to battle procrastination with a ga
 
 ## How to run backend ??
 - First open the backend folder, then do :
-1) python manage.py makemigrations  (make sure dotenv is installed, you can install it using pip install python-dotenv)
-2) python manage.py migrate 
+1) python manage.py makemigrations  
+   1.1 - make sure dotenv is installed - pip install python-dotenv
+   1.2 - Make sure django is installed - pip install django
+3) python manage.py migrate 
 - Now you are good, you can simply run the docker with command = docker compose up --build ( this will run a docker image )
 - Then, also run this command = uvicorn app:app --reload --port 8001 ( This will run fastapi with run the ai for audio summarizing )
 - Now you are all good! 
